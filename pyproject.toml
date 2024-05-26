@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "DMSE"
+version = "0.0.1"
+authors = [
+  { name="Alexander Brown", email="alex.brown7711@gmail.com" },
+]
+description = "Generates dynamic publishers, subscribers, and mock application interfaces using YAML files for multipl languages."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/alexb7711/DMSA"
+Issues = "https://github.com/alexb7711/DMSA/issues"
