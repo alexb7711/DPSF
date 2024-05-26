@@ -25,7 +25,7 @@ PYTHON  = python
 
 ##==============================================================================
 # Makefile configuration
-.PHONY: all setup install update run debug clean test help
+.PHONY: all setup install update run debug clean test help doc
 
 ################################################################################
 # Recipes
@@ -34,7 +34,6 @@ PYTHON  = python
 ##==============================================================================
 #
 all: setup update run ## Default action
-	doxygen Doxyfile
 
 ##==============================================================================
 #
@@ -67,6 +66,11 @@ run: ## Execute the program
 	source $(BIN)/activate
 	cd $(SRC_D)
 	$(PYTHON) main.py
+
+##==============================================================================
+#
+doc: ## Generate DPSMF documentation
+	doxygen Doxyfile
 
 ##==============================================================================
 #

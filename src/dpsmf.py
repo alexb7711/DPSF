@@ -33,7 +33,7 @@ class DPSMF:
     # --------------------------------------------------------------------------
     #
     def __init__(self, base_d: str = ".", out_d: str = ".", sim: bool = False) -> None:
-        """@brief Constructor for DPSMF.
+        """! Constructor for DPSMF.
 
         @param base_d Base path to begin searching (Default: "."):
         @param out_d Output directory for the documentation (Default: ".")
@@ -46,7 +46,6 @@ class DPSMF:
         - Generates the API documentation
         """
 
-        # Member variables
         """!
             @var base_d
             Absolute path to the directory from which DPSMF begins searching
@@ -54,10 +53,14 @@ class DPSMF:
             Absolute path to the directory where the API documentation
             @var sim
             Enables/Disables generating API for mock
-            """
+            @var _files
+            List of files publisher, subscriber, and mock YAML files found
+        """
+
         self.base_d = os.path.abspath(base_d)
         self.out_d = os.path.abspath(out_d)
         self.sim = sim
+        self._files = {"pub": [], "sub": [], "mock": []}
 
         return
 
