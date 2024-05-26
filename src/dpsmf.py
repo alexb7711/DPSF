@@ -1,5 +1,7 @@
-"""@package docstring
-This file defines the core for the Dynamic Publisher Subscriber Mock Framework.
+"""!
+@file dpsmf.py
+@package dpsmf
+@brief This file defines the core for the Dynamic Publisher Subscriber Mock Framework.
 
 The DPSMF object requires:
 
@@ -25,41 +27,51 @@ import os
 
 # ==============================================================================
 #
-class dpsmf:
-    """Dynamic Publisher Subscriber Mock Framework Classy"""
+class DPSMF:
+    """!Dynamic Publisher Subscriber Mock Framework Classy"""
 
     # --------------------------------------------------------------------------
     #
-    def __init__(self, base_d: str = ".", out_d: str = ".", sim: bool = False):
-        """Constructor for DPSMF.
+    def __init__(self, base_d: str = ".", out_d: str = ".", sim: bool = False) -> None:
+        """@brief Constructor for DPSMF.
 
-        # Input
-        - `base_d`: Base path to begin searching (Default: ".")
-        - `out_d`: Output directory for the documentation (Default: ".")
-        - `sim`: Enables/disables the generation of mock YAML files for
-          simulation (Default: False)
+        @param base_d Base path to begin searching (Default: "."):
+        @param out_d Output directory for the documentation (Default: ".")
+        @param sim Enables/disables the generation of mock YAML files for
+               simulation (Default: False)
 
-        # Output
+        @return
         - Generates source code for the associated YAML file in the directory
           that the YAML file was found
         - Generates the API documentation
         """
 
         # Member variables
+        """!
+            @var base_d
+            Absolute path to the directory from which DPSMF begins searching
+            @var out_d
+            Absolute path to the directory where the API documentation
+            @var sim
+            Enables/Disables generating API for mock
+            """
         self.base_d = os.path.abspath(base_d)
         self.out_d = os.path.abspath(out_d)
         self.sim = sim
+
         return
 
     # --------------------------------------------------------------------------
     #
-    def run():
-        """Executes the DPSMF process.
+    def run(self) -> None:
+        """!Executes the DPSMF process."""
 
-        # Input
-        - NONE
+        # Recursively search `base_d` for
+        # - pub_[name].[yml,yaml]
+        # - sub_[name].[yml,yaml]
+        # - mock_[name][yml.yaml]
+        #
+        for path, d_names, f_names in os.walk(self.base_d):
+            print(path, d_names, f_names)
 
-        # Output
-        - NONE
-        """
         return

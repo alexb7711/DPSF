@@ -5,7 +5,7 @@
 ##==============================================================================
 # Directories
 SRC_D     = src
-TST_D     = test
+TST_D     = tests
 ENV_DIR   = .venv
 ifneq ($(wildcard $(ENV_DIR)/bin/.),)
 NOSE_DIR  = $(ENV_DIR)/bin
@@ -38,13 +38,9 @@ all: setup update run ## Default action
 
 ##==============================================================================
 #
+.ONESHELL:
 test: ## Run unit tests
-	echo +++++++++
-	ls
-	echo +++++++++
-
-	cd $(shell pwd)        &&  \
-	source $(BIN)/activate  &&  \
+	source $(BIN)/activate
 	$(PYTHON) -m unittest discover -s $(TST_D) -p "test_*.py"
 
 ##==============================================================================
