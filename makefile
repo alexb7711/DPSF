@@ -38,7 +38,7 @@ all: setup update run ## Default action
 ##==============================================================================
 #
 .ONESHELL:
-test: ## Run unit tests
+test: setup ## Run unit tests
 	source $(BIN)/activate
 	$(PYTHON) -m unittest discover -s $(TST_D) -p "test_*.py"
 
