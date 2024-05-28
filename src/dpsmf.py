@@ -26,6 +26,10 @@ import os
 import re
 import yaml_reader
 
+import src.generators.publisher_generator as pg
+import src.generators.subscriber_generator as sg
+import src.generators.mock_generator as mg
+
 from src.types.pub import Publisher
 from src.types.sub import Subscriber
 from src.types.mock import Mock
@@ -171,6 +175,10 @@ class DPSMF:
 
         # Create a buffer of all the publisher
         publishers = self._get_message_data("pub")
+
+        # Call publisher generation function
+        pg.generate(self._files["pub"], publishers)
+
         return
 
     # --------------------------------------------------------------------------
@@ -179,6 +187,9 @@ class DPSMF:
         """!Generate subscriber files"""
         # Create a buffer of all the publisher
         subscribers = self._get_message_data("sub")
+
+        # Call subscriber generation function
+        sg.generate(self._files["pub"], subscribers)
         return
 
     # --------------------------------------------------------------------------
@@ -186,6 +197,9 @@ class DPSMF:
     def _generate_mock_files(self):
         """!Generate mock files"""
         mock = self._get_message_data("mock")
+
+        # Call mock generation function
+        mg.generate(self._files["pub"], mock)
         return
 
     # --------------------------------------------------------------------------
