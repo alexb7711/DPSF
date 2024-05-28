@@ -26,9 +26,15 @@ import os
 import re
 import yaml_reader
 
+from src.types.pub import Publisher
+from src.types.sub import Subscriber
+from src.types.mock import Mock
+
 
 # ==============================================================================
 #
+
+
 class DPSMF:
     """!Dynamic Publisher Subscriber Mock Framework Classy"""
 
@@ -131,7 +137,7 @@ class DPSMF:
                     elif self.sim and re.match("^mock.*", f):
                         self._files["mock"].append(path + "/" + f)
 
-        # Sort the files
+        # Sort the files for consistency in processing
         self._files["pub"].sort()
         self._files["sub"].sort()
         self._files["mock"].sort()
@@ -156,27 +162,52 @@ class DPSMF:
     # --------------------------------------------------------------------------
     #
     def _generate_pub_files(self):
-        """!Generate publisher files"""
+        """!
+        Generate publisher files
 
-        pulishers = []
+        @return
+        Returns a list of publisher objects.
+        """
 
-        for fp in self._files["pub"]:
-            # Read in the YAML file
-            yml = yaml_reader.open_yaml(fp, "r")
-
+        # Create a buffer of all the publisher
+        publishers = self._get_message_data("pub")
         return
 
     # --------------------------------------------------------------------------
     #
     def _generate_sub_files(self):
         """!Generate subscriber files"""
+        # Create a buffer of all the publisher
+        subscribers = self._get_message_data("sub")
         return
 
     # --------------------------------------------------------------------------
     #
     def _generate_mock_files(self):
         """!Generate mock files"""
+        mock = self._get_message_data("mock")
         return
+
+    # --------------------------------------------------------------------------
+    #
+    def _get_message_data(self, message_type: str) -> list[dict]:
+        # Create empty buffer
+        message = []
+
+        # Iterate through each message to be created
+        for fp in self._files[message_type]:
+            # Read in the YAML file
+            yml = yaml_reader.open_yaml(fp, "r")
+
+            # Save the data
+            if message_type == "pub":
+                message.append(Publisher.format_data(yml))
+            elif message_type == "sub":
+                message.append(Subscriber.format_data(yml))
+            elif message_type == "mock":
+                message.append(Mock.format_data(yml))
+
+        return message
 
     # --------------------------------------------------------------------------
     #
