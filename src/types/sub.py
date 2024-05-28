@@ -1,7 +1,7 @@
 """!@file sub.py"""
 
 from dataclasses import dataclass
-from typing import TextIO
+from typing import TextIO, Self
 
 
 @dataclass
@@ -23,5 +23,19 @@ class Subscriber:
 
     # ==========================================================================
     # Helper methods
-    def format_data(yml: TextIO) -> dict:
-        return {}
+    def format_data(yml: TextIO) -> Self:
+        """!
+        Extracts the data from a YAML file and formats it in a data class.
+
+        @param: yml File handle to the subscriber YAML file.
+
+        @return
+        Data class containing the allowed parameters for subscribers.
+        """
+
+        # Extract the data
+        Subscriber.name = yml["name"]
+        Subscriber.subscriptions = yml["subscriptions"]
+        Subscriber.desc = yml["desc"]
+
+        return Subscriber

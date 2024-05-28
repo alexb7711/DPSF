@@ -78,6 +78,10 @@ class DPSMF:
         ## @var _files
         # List of files publisher, subscriber, and mock YAML files found
         self._files = {"pub": [], "sub": [], "mock": []}
+
+        ## @var _data
+        # List of objects for publisher, subscriber, and mock YAML files found
+        self._data = {"pub": [], "sub": [], "mock": []}
         # fmt: on
 
         return
@@ -102,12 +106,23 @@ class DPSMF:
     #
     def get_files(self) -> dict:
         """!
-        Returns a dictonary of the stored YAML file location's
+        Returns a dictionary of the stored YAML file location's
 
         @return Dictionary of file paths separated by type.
         Example: dict["pub"][0] -> [path]
         """
         return self._files.copy()
+
+    # --------------------------------------------------------------------------
+    #
+    def get_data(self) -> dict:
+        """!
+        Returns a dictionary of the data objects for each type.
+
+        @return Dictionary of data objects separated by type.
+        Example: dict["pub"][0] -> Publisher
+        """
+        return self._data.copy()
 
     ############################################################################
     # PRIVATE
@@ -174,10 +189,10 @@ class DPSMF:
         """
 
         # Create a buffer of all the publisher
-        publishers = self._get_message_data("pub")
+        self._data["pub"] = self._get_message_data("pub")
 
         # Call publisher generation function
-        pg.generate(self._files["pub"], publishers)
+        pg.generate(self._files["pub"], self._data["pub"])
 
         return
 
@@ -186,20 +201,20 @@ class DPSMF:
     def _generate_sub_files(self):
         """!Generate subscriber files"""
         # Create a buffer of all the publisher
-        subscribers = self._get_message_data("sub")
+        self._data["sub"] = self._get_message_data("sub")
 
         # Call subscriber generation function
-        sg.generate(self._files["pub"], subscribers)
+        sg.generate(self._files["pub"], self._data["sub"])
         return
 
     # --------------------------------------------------------------------------
     #
     def _generate_mock_files(self):
         """!Generate mock files"""
-        mock = self._get_message_data("mock")
+        self._data["mock"] = self._get_message_data("mock")
 
         # Call mock generation function
-        mg.generate(self._files["pub"], mock)
+        mg.generate(self._files["pub"], self._data["mock"])
         return
 
     # --------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 """!@file mock.py"""
 
 from dataclasses import dataclass
-from typing import TextIO
+from typing import TextIO, Self
 
 
 @dataclass
@@ -22,5 +22,19 @@ class Mock:
 
     # ==========================================================================
     # Helper methods
-    def format_data(yml: TextIO) -> dict:
-        return {}
+    def format_data(yml: TextIO) -> Self:
+        """!
+        Extracts the data from a YAML file and formats it in a data class.
+
+        @param: yml File handle to the mock YAML file.
+
+        @return
+        Data class containing the allowed parameters for mocks.
+        """
+
+        # Extract the data
+        Mock.name = yml["name"]
+        Mock.data = yml["data"]
+        Mock.desc = yml["desc"]
+
+        return Mock

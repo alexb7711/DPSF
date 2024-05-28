@@ -1,7 +1,7 @@
 """!@file pub.py"""
 
 from dataclasses import dataclass
-from typing import TextIO
+from typing import TextIO, Self
 
 
 @dataclass
@@ -23,23 +23,19 @@ class Publisher:
 
     # ==========================================================================
     # Helper methods
-    def format_data(yml: TextIO) -> dict:
+    def format_data(yml: TextIO) -> Self:
         """!
-        Extracts the data from a YAML file and formats it in a dictionary.
+        Extracts the data from a YAML file and formats it in a data class.
 
         @param: yml File handle to the publisher YAML file.
 
         @return
-        Dictionary containing the name, publisher data, and description
+        Data class containing the allowed parameters for publishers.
         """
 
         # Extract the data
         Publisher.name = yml["name"]
-        Publisher.pub = yml["publish"]
+        Publisher.publish = yml["publish"]
         Publisher.desc = yml["desc"]
 
-        return {
-            "name": Publisher.name,
-            "publish": Publisher.pub,
-            "desc": Publisher.desc,
-        }
+        return Publisher
