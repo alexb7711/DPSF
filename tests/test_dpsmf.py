@@ -16,11 +16,16 @@ import unittest
 class TestDPSMF(unittest.TestCase):
     # -------------------------------------------------------------------------------
     #
-    def test_dir_search(self):
-        # Find the files
+    def get_files():
         d = dpsmf.DPSMF("./example", "None", True)
         d.run()
-        f = d.get_files()
+        return d.get_files()
+
+    # -------------------------------------------------------------------------------
+    #
+    def test_dir_search(self):
+        # Find the files
+        f = TestDPSMF.get_files()
 
         # Count the files
         self.assertEqual(len(f["pub"]), 1)
@@ -34,4 +39,15 @@ class TestDPSMF(unittest.TestCase):
         self.assertEqual(pwd + "/subscribers/sub_position.yml", f["sub"][0])
         self.assertEqual(pwd + "/mock/mock_dc_motor.yml", f["mock"][0])
 
+        return
+
+    # -------------------------------------------------------------------------------
+    #
+    def test_data_structure_content(self):
+        # Find the files
+        # f = TestDPSMF.get_files()
+
+        # Integer
+        # Float
+        # Boolean
         return
