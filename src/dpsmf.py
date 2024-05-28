@@ -24,6 +24,7 @@ generated will be created and placed in the `out_d` directory.
 # Imports
 import os
 import re
+import yaml_reader
 
 
 # ==============================================================================
@@ -79,9 +80,11 @@ class DPSMF:
         # Search for YAML files
         self._search_for_yaml()
 
-        # Generate the file's
+        # Generate the files
+        self._generate_files()
 
         # Create documentation
+        self._generate_doc()
 
         return
 
@@ -133,4 +136,50 @@ class DPSMF:
         self._files["sub"].sort()
         self._files["mock"].sort()
 
+        return
+
+    # --------------------------------------------------------------------------
+    #
+    def _generate_files(self):
+        """!Generate the publisher, subscriber, and mock files"""
+        # Generate publisher and subscriber files
+        self._generate_pub_files()
+        self._generate_sub_files()
+
+        # If `sim` is enabled
+        if self.sim:
+            # Generate mock files
+            self._generate_mock_files()
+
+        return
+
+    # --------------------------------------------------------------------------
+    #
+    def _generate_pub_files(self):
+        """!Generate publisher files"""
+
+        pulishers = []
+
+        for fp in self._files["pub"]:
+            # Read in the YAML file
+            yml = yaml_reader.open_yaml(fp, "r")
+
+        return
+
+    # --------------------------------------------------------------------------
+    #
+    def _generate_sub_files(self):
+        """!Generate subscriber files"""
+        return
+
+    # --------------------------------------------------------------------------
+    #
+    def _generate_mock_files(self):
+        """!Generate mock files"""
+        return
+
+    # --------------------------------------------------------------------------
+    #
+    def _generate_doc(self):
+        """!Generate the documentation"""
         return
