@@ -8,11 +8,16 @@ jobs:
   build:
     name: "Test"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
     - run: sudo add-apt-repository ppa:deadsnakes/ppa -y
     - run: sudo apt update
-    - run: sudo apt install python3.11
-    - run: sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
     - run: make setup
     - run: make test
