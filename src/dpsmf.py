@@ -26,9 +26,19 @@ import os
 import re
 import yaml_reader
 
+import src.generators.publisher_generator as pg
+import src.generators.subscriber_generator as sg
+import src.generators.mock_generator as mg
+
+from src.types.pub import Publisher
+from src.types.sub import Subscriber
+from src.types.mock import Mock
+
 
 # ==============================================================================
 #
+
+
 class DPSMF:
     """!Dynamic Publisher Subscriber Mock Framework Classy"""
 
@@ -68,6 +78,10 @@ class DPSMF:
         ## @var _files
         # List of files publisher, subscriber, and mock YAML files found
         self._files = {"pub": [], "sub": [], "mock": []}
+
+        ## @var _data
+        # List of objects for publisher, subscriber, and mock YAML files found
+        self._data = {"pub": [], "sub": [], "mock": []}
         # fmt: on
 
         return
@@ -92,12 +106,23 @@ class DPSMF:
     #
     def get_files(self) -> dict:
         """!
-        Returns a dictonary of the stored YAML file location's
+        Returns a dictionary of the stored YAML file location's
 
         @return Dictionary of file paths separated by type.
         Example: dict["pub"][0] -> [path]
         """
         return self._files.copy()
+
+    # --------------------------------------------------------------------------
+    #
+    def get_data(self) -> dict:
+        """!
+        Returns a dictionary of the data objects for each type.
+
+        @return Dictionary of data objects separated by type.
+        Example: dict["pub"][0] -> Publisher
+        """
+        return self._data.copy()
 
     ############################################################################
     # PRIVATE
@@ -131,7 +156,7 @@ class DPSMF:
                     elif self.sim and re.match("^mock.*", f):
                         self._files["mock"].append(path + "/" + f)
 
-        # Sort the files
+        # Sort the files for consistency in processing
         self._files["pub"].sort()
         self._files["sub"].sort()
         self._files["mock"].sort()
@@ -156,13 +181,18 @@ class DPSMF:
     # --------------------------------------------------------------------------
     #
     def _generate_pub_files(self):
-        """!Generate publisher files"""
+        """!
+        Generate publisher files
 
-        pulishers = []
+        @return
+        Returns a list of publisher objects.
+        """
 
-        for fp in self._files["pub"]:
-            # Read in the YAML file
-            yml = yaml_reader.open_yaml(fp, "r")
+        # Create a buffer of all the publisher
+        self._data["pub"] = self._get_message_data("pub")
+
+        # Call publisher generation function
+        pg.generate(self._files["pub"], self._data["pub"])
 
         return
 
@@ -170,13 +200,43 @@ class DPSMF:
     #
     def _generate_sub_files(self):
         """!Generate subscriber files"""
+        # Create a buffer of all the publisher
+        self._data["sub"] = self._get_message_data("sub")
+
+        # Call subscriber generation function
+        sg.generate(self._files["pub"], self._data["sub"])
         return
 
     # --------------------------------------------------------------------------
     #
     def _generate_mock_files(self):
         """!Generate mock files"""
+        self._data["mock"] = self._get_message_data("mock")
+
+        # Call mock generation function
+        mg.generate(self._files["pub"], self._data["mock"])
         return
+
+    # --------------------------------------------------------------------------
+    #
+    def _get_message_data(self, message_type: str) -> list[dict]:
+        # Create empty buffer
+        message = []
+
+        # Iterate through each message to be created
+        for fp in self._files[message_type]:
+            # Read in the YAML file
+            yml = yaml_reader.open_yaml(fp, "r")
+
+            # Save the data
+            if message_type == "pub":
+                message.append(Publisher.format_data(yml))
+            elif message_type == "sub":
+                message.append(Subscriber.format_data(yml))
+            elif message_type == "mock":
+                message.append(Mock.format_data(yml))
+
+        return message
 
     # --------------------------------------------------------------------------
     #

@@ -1,6 +1,6 @@
 """!@file var_bool.py"""
 
-from dataclass import dataclass
+from dataclasses import dataclass
 
 
 @dataclass

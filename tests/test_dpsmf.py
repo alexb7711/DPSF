@@ -19,13 +19,14 @@ class TestDPSMF(unittest.TestCase):
     def get_files():
         d = dpsmf.DPSMF("./example", "None", True)
         d.run()
-        return d.get_files()
+        return d
 
     # -------------------------------------------------------------------------------
     #
     def test_dir_search(self):
         # Find the files
-        f = TestDPSMF.get_files()
+        d = TestDPSMF.get_files()
+        f = d.get_files()
 
         # Count the files
         self.assertEqual(len(f["pub"]), 1)
@@ -43,11 +44,23 @@ class TestDPSMF(unittest.TestCase):
 
     # -------------------------------------------------------------------------------
     #
-    def test_data_structure_content(self):
+    def test_first_level_data_structure(self):
         # Find the files
-        # f = TestDPSMF.get_files()
+        d = TestDPSMF.get_files()
+        f = d.get_data()
 
-        # Integer
-        # Float
-        # Boolean
+        # Publisher
+        self.assertEqual(f["pub"][0].name, "test_publisher")
+        self.assertTrue(isinstance(f["pub"][0].publish["int"], list))
+        self.assertEqual(f["pub"][0].desc, "This is a test publisher")
+
+        # Subscriber
+        self.assertEqual(f["sub"][0].name, "test_subscriber")
+        self.assertTrue(isinstance(f["sub"][0].subscriptions, list))
+        self.assertEqual(f["sub"][0].desc, "This is a test subscriber")
+
+        # Mock
+        self.assertEqual(f["mock"][0].name, "test_mock")
+        self.assertTrue(isinstance(f["mock"][0].data["int"], list))
+        self.assertEqual(f["mock"][0].desc, "This is a test mock")
         return
