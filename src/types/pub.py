@@ -12,13 +12,17 @@ class Publisher:
     @param name String defining the name of the publisher
     @param data Defines the set of data types and data structures in the
            publisher
-    @param description Description of the publisher
+    @param queue_size Number of elements that may be buffered (Optional)
+    @param rate Rate of published data. (Optional)
+    @param description Description of the publisher (Optional)
     """
 
     # ==========================================================================
     # Data
     name: str
     publish: dict
+    queue_size: int
+    rate: float
     desc: str
 
     # ==========================================================================
@@ -34,8 +38,20 @@ class Publisher:
         """
 
         # Extract the data
+
+        # Default values
+        Publisher.queue_size = 1
+
+        # Required fields
         Publisher.name = yml["name"]
         Publisher.publish = yml["publish"]
-        Publisher.desc = yml["desc"]
+
+        # Optional field
+        if yml.get("queue_size"):
+            Publisher.rate = yml["queue_size"]
+        if yml.get("rate"):
+            Publisher.rate = yml["rate"]
+        if yml.get("desc"):
+            Publisher.desc = yml["desc"]
 
         return Publisher
