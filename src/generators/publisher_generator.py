@@ -4,7 +4,7 @@ This module calls the appropriate generators to create the publisher file with
 the correct language.
 """
 
-from src.types.pub import Publisher
+from src.types.publisher import Publisher
 
 
 # ==============================================================================

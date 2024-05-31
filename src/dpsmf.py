@@ -30,7 +30,7 @@ import src.generators.publisher_generator as pg
 import src.generators.subscriber_generator as sg
 import src.generators.mock_generator as mg
 
-from src.types.pub import Publisher
+from src.types.publisher import Publisher
 from src.types.sub import Subscriber
 from src.types.mock import Mock
 

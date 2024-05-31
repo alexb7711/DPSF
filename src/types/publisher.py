@@ -1,4 +1,4 @@
-"""!@file pub.py"""
+"""!@file publisher.py"""
 
 from dataclasses import dataclass
 from typing import TextIO, Self
