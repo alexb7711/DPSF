@@ -1,0 +1,56 @@
+@startuml
+folder "Publishers" {
+  [Publisher 1]
+    [Publisher 2]
+}
+
+node "Simulation" {
+  [Internal Messages]
+}
+
+node "Implementation" {
+  [Internal Messages]
+  [External Messages]
+}
+
+node Communication {
+  node "Communication Method" {
+    [Radio]
+    [TCP/UDP]
+  }
+
+  cloud "Transmission" {
+    [Network]
+    [Radio]
+    [...]
+  }
+}
+
+database "Published Data" {
+  [Publisher 1 data]
+  [Publisher 2 data]
+}
+
+
+' Initialization 
+[Simulation] -up-> [Publishers] : Inititialization 
+[Implementation] -up-> [Publishers] : Inititialization 
+
+' Data publication
+[Simulation] <-- [Publishers] : Publish Data
+[Implementation] <-- [Publishers] : Publish Data
+
+' Interface with communication method
+[Simulation] --> [Communication] : Communicate with transmission API
+[Implementation] --> [Communication] : Communicate with transmission API
+
+' Data transmission
+[Communication Method] --> [Transmission] : Send the data
+
+' Data storage
+[Simulation] --> [Published Data] : Store data on client
+[Implementation] --> [Published Data] : Store data on client
+
+' Data storage is on client
+[Published Data] -down-> [Client]
+@enduml
