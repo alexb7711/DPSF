@@ -4,13 +4,15 @@ folder "Publishers" {
     [Publisher 2]
 }
 
-node "Simulation" {
-  [Internal Messages]
-}
+node DPSMF {
+  node "Simulation" {
+    [Internal Messages]
+  }
 
-node "Implementation" {
-  [Internal Messages]
-  [External Messages]
+  node "Implementation" {
+    [Internal Messages]
+    [External Messages]
+  }
 }
 
 node Communication {
@@ -22,7 +24,7 @@ node Communication {
   cloud "Transmission" {
     [Network]
     [Radio]
-    [...]
+    [RF]
   }
 }
 
@@ -33,23 +35,23 @@ database "Published Data" {
 
 
 ' Initialization 
-[Simulation] -up-> [Publishers] : Inititialization 
-[Implementation] -up-> [Publishers] : Inititialization 
+[DPSMF] -up-> [Publishers] : Inititialization 
+[DPSMF] -up-> [Publishers] : Inititialization 
 
 ' Data publication
-[Simulation] <-- [Publishers] : Publish Data
-[Implementation] <-- [Publishers] : Publish Data
+[DPSMF] <-- [Publishers] : Publish Data
+[DPSMF] <-- [Publishers] : Publish Data
 
 ' Interface with communication method
-[Simulation] --> [Communication] : Communicate with transmission API
-[Implementation] --> [Communication] : Communicate with transmission API
+[DPSMF] --> [Communication] : Communicate with transmission API
+[DPSMF] --> [Communication] : Communicate with transmission API
 
 ' Data transmission
 [Communication Method] --> [Transmission] : Send the data
 
 ' Data storage
-[Simulation] --> [Published Data] : Store data on client
-[Implementation] --> [Published Data] : Store data on client
+[DPSMF] --> [Published Data] : Store data on client
+[DPSMF] --> [Published Data] : Store data on client
 
 ' Data storage is on client
 [Published Data] -down-> [Client]
