@@ -5,6 +5,9 @@ the correct language.
 """
 
 from src.types.publisher import Publisher
+from src.generators.python.python_publisher import pygen
+from src.generators.rust.rust_publisher import rsgen
+from src.generators.c.c_publisher import cgen
 
 
 # ==============================================================================
@@ -20,4 +23,17 @@ def generate(fp: list[str], p: list[Publisher]):
     @return
     None
     """
+
+    if p["lang"] == "python":
+        pygen(fp, p)
+    elif p["lang"] == "rust":
+        rsgen(fp, p)
+        pass
+    elif p["lang"] == "C++":
+        cgen(fp, p)
+        pass
+    elif p["lang"] == "C":
+        cgen(fp, p)
+        pass
+
     return

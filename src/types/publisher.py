@@ -10,6 +10,7 @@ class Publisher:
     Defines the allowed parameters for a publisher object.
 
     @param name String defining the name of the publisher
+    @param lang String specifying the output language(s)
     @param data Defines the set of data types and data structures in the
            publisher
     @param queue_size Number of elements that may be buffered (Optional)
@@ -20,6 +21,7 @@ class Publisher:
     # ==========================================================================
     # Data
     name: str
+    lang: str
     publish: dict
     queue_size: int
     rate: float
@@ -41,6 +43,7 @@ class Publisher:
 
         # Default values
         Publisher.queue_size = 1
+        Publisher.lang = ["python"]
 
         # Required fields
         Publisher.name = yml["name"]

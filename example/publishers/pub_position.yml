@@ -1,4 +1,5 @@
 name: "test_publisher"
+lang: "python"
 publish:
   int:
     - name: "Integer"
