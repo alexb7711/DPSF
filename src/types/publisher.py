@@ -43,7 +43,7 @@ class Publisher:
 
         # Default values
         Publisher.queue_size = 1
-        Publisher.lang = ["python"]
+        Publisher.lang = "python"
 
         # Required fields
         Publisher.name = yml["name"]

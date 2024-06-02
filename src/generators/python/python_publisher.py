@@ -1,6 +1,6 @@
 """!@file python_publisher.pyx
 
-This module generates the code for python publishers.
+This module generates the code for Python publishers.
 """
 
 from src.types.publisher import Publisher
