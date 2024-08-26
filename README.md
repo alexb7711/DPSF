@@ -1,12 +1,11 @@
-# Dynamic Publisher Subscriber Mark Framework (DPSMF)
+# Dynamic Publisher Subscriber Framework (DPSF)
 
 The DPSMF searches a project for `yaml` files with a certain naming convention and generates
 boilerplate APIs for each of the files found. The boilerplate text, as the project name implies, is
-for publishers, subscribers, and mock code.
+for publishers and subscribers.
 
 - Publishers: Code that creates data and wants to share it
 - Subscribers: Code that wants to get data from a publisher
-- Mock: Code that imitates the behavior of a real system
 
 Along with the boilerplate code, a document outlining the API created will also be generated at the
 location specified by the `out_dir` option. There are two main targets for this project:
@@ -34,18 +33,11 @@ The following section contain explanations for the parameters of each of the all
     - [ ] Boolean
     - [ ] Arrays
 
-## TODO Publisher/Subscriber/Mock Specification
+## TODO Publisher/Subscriber Specification
 
 - [ ] Type API
 - [ ] Publisher API
 - [ ] Subscriber API
-- [ ] Mock API
-
-## Simulation
-
-The simulation aspect will generate the publishers, subscribers, _and_ mock frameworks. By default
-DPSMF will generate just the publishers and subscribers, meaning that the mock interfaces will be
-generated only if the `enable_mock` option is set to `true`.
 
 ## TODO: Implementation
 
